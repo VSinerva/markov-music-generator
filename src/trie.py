@@ -1,5 +1,5 @@
 """Markovin ketjuille tarkoitettu trie-tietorakenteen implementaatio.
-import Trie
+from trie import Trie
 """
 
 class TrieSolmu: # pylint: disable=too-few-public-methods
