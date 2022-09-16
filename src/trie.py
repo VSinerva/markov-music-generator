@@ -40,7 +40,7 @@ class Trie:
 
     def etsi_seuraavat(self, alkuosa):
         if not self.todennakoisyydet_laskettu:
-            self.laske_todennakoisyydet
+            self.laske_todennakoisyydet()
 
         solmu = self.juuri
         
