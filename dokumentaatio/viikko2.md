@@ -3,4 +3,8 @@ Perehdyin trie-tietorakenteen teoriaan ja toteutukseen. Punnitsin eri vaihtoehto
 
 Toinen poikkeama löytämästäni kirjallisuudesta on solmuissa oleva sanan loppua merkkaava muuttuja. Tässä käytössä en tarvitse operaatioita, jotka hyödyntäisivät tätä, ja saman toiminnon voin tarvittaessa saavuttaa tarkistamalla onko laskuri > 0.
 
-Aikaa käytin tällä viikolla noin 4,5h.
+Lisäsin koodin laadun seuraamista varten pylintin, pytestin ja coveragen projektiin. Korjasin pylintin havaitsemat puutteet koodissa. Kirjoitin yksikkötestis trie-moduulilleni. Coverage-moduulilla saa tehtyä kattavuusraportin, tämänhetkinen haarakattavuus on 100%.
+
+Seuraavalla viikolla toteutan itse Markovin ketjut ja testaan niitä jonkinlaisella keinotekoisella opetusdatalla. Ajan riittäessä aloitan myös varsinaisen musiikin käsittelyn toteuttamisen.
+
+Aikaa käytin tällä viikolla noin 7h.
