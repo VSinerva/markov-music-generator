@@ -63,7 +63,7 @@ class Trie:
 
     def etsi_seuraavat(self, alkuosa):
         """Etsi alkuosaan sopivat viimeiset merkit ja niiden todennäköisyydet.
-        Palauttaa listan tupleja (tod., merkki) järjestettynä todennäköisyyden mukaan.
+        Palauttaa tuplen listoja (tod., merkit).
         """
 
         #Funktion sisällä tarkistetaan onko laskenta tarpeellista
@@ -77,8 +77,11 @@ class Trie:
                 return []
             solmu = solmu.lapset[merkki]
 
-        #Listaa kaikki alkuosan lapset todennäköisyyden mukaisessa järjestyksessä
-        vaihtoehdot = []
+        #Listaa kaikki alkuosan lapset
+        todennakoisyydet = []
+        merkit = []
+
         for merkki, lapsi in solmu.lapset.items():
-            vaihtoehdot.append((lapsi.todennakoisyys, merkki))
-        return sorted(vaihtoehdot, reverse=True)
+            todennakoisyydet.append(lapsi.todennakoisyys)
+            merkit.append(merkki)
+        return (todennakoisyydet, merkit)

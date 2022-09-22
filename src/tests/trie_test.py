@@ -24,8 +24,13 @@ class TestTrie(unittest.TestCase):
         self.assertFalse(self.trie.etsi_seuraavat("AB"))
         self.trie.lisaa("ABC")
         self.trie.lisaa("ABC")
-        self.assertEqual(self.trie.etsi_seuraavat("AB"), [(1, "C")])
+        self.assertEqual(self.trie.etsi_seuraavat("AB"), ([1], ["C"]))
         self.trie.lisaa("ABC")
         self.trie.lisaa("ABD")
-        self.assertEqual(self.trie.etsi_seuraavat("AB"), [(0.75, "C"), (0.25, "D")])
-        self.assertEqual(self.trie.etsi_seuraavat("AB"), [(0.75, "C"), (0.25, "D")])
+
+        todennakoisyydet, merkit = self.trie.etsi_seuraavat("AB")
+        #Tällä saadaan järjestetty lista merkkejä ja todennäköisyyksiä, joka helpottaa testaamista
+        lista = sorted(zip(todennakoisyydet, merkit), reverse=True)
+        self.assertEqual(lista, [(0.75, "C"), (0.25, "D")])
+
+        todennakoisyydet, merkit = self.trie.etsi_seuraavat("AB")
