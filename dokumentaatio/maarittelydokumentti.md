@@ -17,6 +17,8 @@ Seuraavan nuotin luominen Markovin ketjulla vaatii kaikkien mahdollisten seuraav
 ## Lähteet (Tähän asti)
 [Wikipedia: Trie](https://en.wikipedia.org/wiki/Trie)
 
+[Wikipedia: Markov chain](https://en.wikipedia.org/wiki/Markov_chain)
+
 [Albert Au Yeung "Implementing Trie in Python" (Luettu 15.09.2022)](https://albertauyeung.github.io/2020/06/15/python-trie.html/#implementing-trie-in-python-1)
 
 [Vijaykrishna Ram "Trie Data Structure in C/C++" (Luettu 15.09.2022)](https://www.digitalocean.com/community/tutorials/trie-data-structure-in-c-plus-plus)

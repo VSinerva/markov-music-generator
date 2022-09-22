@@ -74,7 +74,7 @@ class Trie:
         #Etsitään alkuosaa vastaava solmu
         for merkki in alkuosa:
             if merkki not in solmu.lapset:
-                return []
+                return (None, None)
             solmu = solmu.lapset[merkki]
 
         #Listaa kaikki alkuosan lapset
