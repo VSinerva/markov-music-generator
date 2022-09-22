@@ -21,7 +21,7 @@ class TestTrie(unittest.TestCase):
         self.assertEqual(2, self.trie.juuri.lapset["A"].lapset["B"].laskuri)
 
     def test_etsi_seuraavat(self):
-        self.assertFalse(self.trie.etsi_seuraavat("AB"))
+        self.assertFalse(self.trie.etsi_seuraavat("AB")[0])
         self.trie.lisaa("ABC")
         self.trie.lisaa("ABC")
         self.assertEqual(self.trie.etsi_seuraavat("AB"), ([1], ["C"]))
