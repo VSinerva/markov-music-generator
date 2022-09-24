@@ -14,4 +14,4 @@ projektin juurikansiosta. Testikattavuusraportin voi luoda juurikansiosta komenn
 
 Tämän jälkeen raportti löytyy tiedostosta `htmlcov/index.html`.
 
-![Testikattavuusraportti. Kokonaiskattavuus 99%](https://github.com/ArcticCoder/markov-music-generator/blob/main/kattavuus.png?raw=true)
+![Testikattavuusraportti. Kokonaiskattavuus 99%](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/kattavuus.png?raw=true)
