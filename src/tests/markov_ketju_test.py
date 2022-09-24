@@ -2,6 +2,10 @@ import unittest
 from markov_ketju import MarkovKetju
 
 class TestMarkovKetju(unittest.TestCase):
+
+    def test_0_aste(self):
+        self.assertRaises(ValueError, MarkovKetju, 0)
+
     def test_seuraava_1_aste(self):
         ketju = MarkovKetju(1)
         opetusdata = ["ABCDEA"]

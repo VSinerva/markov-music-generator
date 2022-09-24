@@ -1,4 +1,5 @@
 """Markovin ketjuille tarkoitettu trie-tietorakenteen implementaatio.
+Käyttö:
 from trie import Trie
 """
 
