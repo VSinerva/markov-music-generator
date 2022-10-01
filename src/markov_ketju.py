@@ -16,7 +16,6 @@ class MarkovKetju:
             raise ValueError("Aste ei voi olla < 1!")
 
         self._trie = trie
-        self._opetusdata = []
         self._aste = aste
         self._menneet_tilat = deque()
 
@@ -26,9 +25,8 @@ class MarkovKetju:
             ["ABC", "ABB", "AAAAAA"]
         """
         self._trie = Trie()
-        self._opetusdata = opetusdata
 
-        for jono in self._opetusdata:
+        for jono in opetusdata:
             if len(jono) > self._aste:
                 alkio = deque(jono[0:self._aste+1])
                 self._trie.lisaa(alkio)
@@ -40,20 +38,11 @@ class MarkovKetju:
 
     def aseta_alkuosa(self, alkuosa):
         """Asettaa alkuosan, jonka perusteella Markovin ketju luo seuraavan merkin.
-        Alkuosan pituus on vähintään yksi, liian pitkästä alkuosasta jätetään
-        loppu pois. Liian lyhyttä täydennetään opetusdatan perusteella.
+        Alkuosan pituus on sama kuin ketjun aste, liian pitkästä alkuosasta jätetään
+        loppu pois.
         """
-        while len(alkuosa) < self._aste:
-            ketju = MarkovKetju(len(alkuosa))
-            ketju.kasittele_opetusdata(self._opetusdata)
-            ketju.aseta_alkuosa(alkuosa)
-            alkuosa = [x for x in alkuosa]
-
-            seuraava = ketju.seuraava()
-            if not seuraava:
-                raise ValueError("Alkuosan täydennys ei onnistunut!")
-            alkuosa.append(seuraava)
-
+        if len(alkuosa) < self._aste:
+            raise ValueError("Liian lyhyt alkuosa!")
         self._menneet_tilat = deque([alkuosa[i] for i in range(0, self._aste)])
 
     def seuraava(self):

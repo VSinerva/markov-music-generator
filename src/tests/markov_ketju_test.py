@@ -10,9 +10,6 @@ class TestMarkovKetju(unittest.TestCase):
         ketju = MarkovKetju(1)
         opetusdata = ["ABCDEA"]
         ketju.kasittele_opetusdata(opetusdata)
-
-        self.assertRaises(ValueError, ketju.seuraava)
-
         ketju.aseta_alkuosa("E")
 
         self.assertEqual("A", ketju.seuraava())
@@ -38,24 +35,9 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual("E", ketju.seuraava())
         self.assertEqual("A", ketju.seuraava())
 
+        self.assertRaises(ValueError, ketju.aseta_alkuosa, "F")
         ketju.aseta_alkuosa("EF")
         self.assertFalse(ketju.seuraava())
-
-    def test_alkuosan_taydennys(self):
-        ketju = MarkovKetju(2)
-        opetusdata = ["ABCDEAB"]
-        ketju.kasittele_opetusdata(opetusdata)
-
-        self.assertRaises(ValueError, ketju.aseta_alkuosa, "F")
-
-        ketju.aseta_alkuosa("A")
-
-        self.assertEqual("C", ketju.seuraava())
-        self.assertEqual("D", ketju.seuraava())
-        self.assertEqual("E", ketju.seuraava())
-        self.assertEqual("A", ketju.seuraava())
-        self.assertEqual("B", ketju.seuraava())
-        self.assertEqual("C", ketju.seuraava())
 
     def test_seuraava_todennakoisyys(self):
         """Testaa, että Markovin ketjun antamat merkit ilmenevät likimain oikeilla yleisyyksillä"""
