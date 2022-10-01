@@ -17,7 +17,7 @@ class MarkovKetju:
 
         self._trie = trie
         self._aste = aste
-        self._menneet_tilat = deque()
+        self.menneet_tilat = deque()
 
     def kasittele_opetusdata(self, opetusdata: list):
         """Lukee opetusdata Markovin ketjun omaan trie-rakenteeseen.
@@ -43,24 +43,24 @@ class MarkovKetju:
         """
         if len(alkuosa) < self._aste:
             raise ValueError("Liian lyhyt alkuosa!")
-        self._menneet_tilat = deque([alkuosa[i] for i in range(0, self._aste)])
+        self.menneet_tilat = deque([alkuosa[i] for i in range(0, self._aste)])
 
     def seuraava(self):
         """Antaa seuraavan merkin muilla funktioilla annettujen opetusdata ja alkuosan
         perusteella. Päivittää alkuosan automaattisesti seuraavaa askelta varten
         """
-        if len(self._menneet_tilat) < self._aste:
+        if len(self.menneet_tilat) < self._aste:
             raise ValueError("Markovin ketjulle ei ole asetettu sopivaa alkuosaa!")
 
-        todennakoisyydet, merkit = self._trie.etsi_seuraavat(self._menneet_tilat)
+        todennakoisyydet, merkit = self._trie.etsi_seuraavat(self.menneet_tilat)
 
         if todennakoisyydet and merkit:
             #Valitsee merkeistä yhden, valinta painotetaan triessä olevien todennäköisyyksien avulla
             seuraava = choices(merkit, weights=todennakoisyydet)[0]
 
             #Päivittää alkuosan seuraavaa iteraatiota varten
-            self._menneet_tilat.popleft()
-            self._menneet_tilat.append(seuraava)
+            self.menneet_tilat.popleft()
+            self.menneet_tilat.append(seuraava)
 
             return seuraava
 

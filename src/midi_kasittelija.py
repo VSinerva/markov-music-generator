@@ -18,7 +18,7 @@ savellaji_arvot = {
         "Cb":1,
         }
 
-def LueMidi(tiedostopolku):
+def lue_midi(tiedostopolku):
     midi = mido.MidiFile(tiedostopolku)
     tulos = []
     for raita in midi.tracks:
@@ -41,11 +41,11 @@ def LueMidi(tiedostopolku):
 
     return tulos
 
-def KirjoitaMidi(tiedostopolku, nuotit):
+def kirjoita_midi(tiedostopolku, nuotit, tempo=120):
     midi = mido.MidiFile()
     track = mido.MidiTrack()
 
-    track.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(120), time=0))
+    track.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
     track.append(mido.MetaMessage("time_signature"))
 
     for nuotti in nuotit:

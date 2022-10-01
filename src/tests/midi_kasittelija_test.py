@@ -1,6 +1,6 @@
 import os
 import unittest
-from midi_kasittelija import LueMidi, KirjoitaMidi
+from midi_kasittelija import lue_midi, kirjoita_midi 
 
 class TestMidiKasittelija(unittest.TestCase):
     def test_molemmat(self):
@@ -9,6 +9,6 @@ class TestMidiKasittelija(unittest.TestCase):
             os.remove(testi_polku)
 
         nuotit = [60, 62, 64]
-        KirjoitaMidi(testi_polku, nuotit)
-        luetut_nuotit = LueMidi(testi_polku)[0]
+        kirjoita_midi(testi_polku, nuotit)
+        luetut_nuotit = lue_midi(testi_polku)[0]
         self.assertEqual(nuotit, luetut_nuotit)
