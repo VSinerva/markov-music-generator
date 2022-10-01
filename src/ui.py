@@ -1,9 +1,12 @@
+"""Musiikki generaattorin tekstipohjainen käyttöliittymä
+from ui import UI"""
 from os import system, name
 from re import search
 from sys import exit as sys_exit
 from musiikki_generaattori import musiikki_generaattori
 
-class UI:
+class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
+    """Tekstipohjainen käyttöliittymä. Käynnistyy automaattisesti, kun olio luodaan"""
     def __init__(self):
         self._opetusdata_polku = "opetusdata/*.mid"
         self._tulos_polku = "savelma.mid"
@@ -13,15 +16,24 @@ class UI:
         self._tempo = 120
 
         self._toiminnot = {
-                "A": ("(A)pu", self._tulosta_apu, 0, "Tulosta apu"),
-                "O": ("(O)petusdata [polku]", self._aseta_opetusdata, 1, "Valitse opetusdata"),
-                "P": ("(P)olku [polku]", self._aseta_tulos_polku, 1, "Valitse valmiin sävelmän polku"),
-                "K": ("(K)etjun aste", self._aseta_aste, 1, "Aseta Markovin ketjun aste valittuun kokonaislukuun"),
-                "L": ("a(L)kuosa [merkkijono]", self._aseta_alkuosa, 1, "Aseta alkuosa. Esim. 'C4|D#5|Gb3'"),
-                "N": ("(N)uotteja [luku]", self._aseta_nuottien_maara, 1, "Aseta sävelmän nuottien määrä valittuun kokonaislukuun"),
-                "T": ("(T)empo [luku]", self._aseta_tempo, 1, "Aseta tempo valittuun kokonaislukuun"),
-                "G": ("(G)eneroi sävelmä", self._generoi_savelma, 0, "Generoi sävelmä valituilla asetuksilla"),
-                "S": ("(S)ulje", self._sulje, 0, "Sulje ohjelma")
+                "A": ("(A)pu", self._tulosta_apu, 0,
+                    "Tulosta apu"),
+                "O": ("(O)petusdata [polku]", self._aseta_opetusdata, 1,
+                    "Valitse opetusdata"),
+                "P": ("(P)olku [polku]", self._aseta_tulos_polku, 1,
+                    "Valitse valmiin sävelmän polku"),
+                "K": ("(K)etjun aste", self._aseta_aste, 1,
+                    "Aseta Markovin ketjun aste valittuun kokonaislukuun"),
+                "L": ("a(L)kuosa [merkkijono]", self._aseta_alkuosa, 1,
+                    "Aseta alkuosa. Esim. 'C4|D#5|Gb3'"),
+                "N": ("(N)uotteja [luku]", self._aseta_nuottien_maara, 1,
+                    "Aseta sävelmän nuottien määrä valittuun kokonaislukuun"),
+                "T": ("(T)empo [luku]", self._aseta_tempo, 1,
+                    "Aseta tempo valittuun kokonaislukuun"),
+                "G": ("(G)eneroi sävelmä", self._generoi_savelma, 0,
+                    "Generoi sävelmä valituilla asetuksilla"),
+                "S": ("(S)ulje", self._sulje, 0,
+                    "Sulje ohjelma")
                 }
 
         self._virheet = []
@@ -42,6 +54,7 @@ class UI:
 
             if komento:
                 if komento[0].upper() in self._toiminnot:
+                    # Virheiden välttämiseksi sulkeminen käsitellään ennen muita
                     if komento[0].upper() == "S":
                         self._sulje()
 
@@ -53,9 +66,9 @@ class UI:
                         for i in range(1, 1+parametrien_maara):
                             parametrit.append(komento[i])
                         funktio(parametrit)
-                    except:
+                    # Kaikki virheet halutaan ohittaa
+                    except: # pylint: disable=bare-except
                         self._virheet.append("KOMENNON MUOTO VÄÄRÄ!")
-                        continue
 
     def _tyhjenna(self):
         # windows
@@ -104,7 +117,7 @@ class UI:
 
     def _aseta_alkuosa(self, alkuosa):
         alkuosa = alkuosa[0]
-        if search("^([CcDdEeFfGgAaBb][#b]?[0-8]\|)*[CcDdEeFfGgAaBb][#b]?[0-8]$", alkuosa):
+        if search(r"^([CcDdEeFfGgAaBb][#b]?[0-8]\|)*[CcDdEeFfGgAaBb][#b]?[0-8]$", alkuosa):
             self._alku = alkuosa
         else:
             self._virheet.append("ANNETTU ALKUOSA EI KELPAA!")
@@ -124,7 +137,9 @@ class UI:
     def _generoi_savelma(self, _):
         musiikki_generaattori.lue_opetusdata(self._opetusdata_polku)
         musiikki_generaattori.valmistele_ketju(self._alku, self._aste)
-        print(f"Generoitiin {musiikki_generaattori.generoi_nuotteja(self._nuottien_maara)} nuottia!\n")
+
+        generoitu_maara = musiikki_generaattori.generoi_nuotteja(self._nuottien_maara)
+        print(f"Generoitiin {generoitu_maara} nuottia!\n")
         musiikki_generaattori.kirjoita_midi(self._tulos_polku, self._tempo)
 
     def _sulje(self):

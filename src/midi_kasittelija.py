@@ -1,3 +1,6 @@
+"""Mahdollistaa MIDI-tiedostojen lukemisen ja kirjoittamisen.
+from midi_kasittelija imort lue_midi, kirjoita_midi
+"""
 import mido
 
 savellaji_arvot = {
@@ -19,6 +22,7 @@ savellaji_arvot = {
         }
 
 def lue_midi(tiedostopolku):
+    """Lukee nuotit MIDI tiedostosta"""
     midi = mido.MidiFile(tiedostopolku)
     tulos = []
     for raita in midi.tracks:
@@ -42,17 +46,17 @@ def lue_midi(tiedostopolku):
     return tulos
 
 def kirjoita_midi(tiedostopolku, nuotit, tempo=120):
+    """Kirjoittaa halutut nuotit valittuun MIDI-tiedostoon annetulla tempolla"""
     midi = mido.MidiFile()
-    track = mido.MidiTrack()
+    raita = mido.MidiTrack()
 
-    track.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
-    track.append(mido.MetaMessage("time_signature"))
+    raita.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
+    raita.append(mido.MetaMessage("time_signature"))
 
     for nuotti in nuotit:
         if nuotti:
-            track.append(mido.Message("note_on", note=nuotti, velocity=64, time=0))
-            track.append(mido.Message("note_on", note=nuotti, velocity=0, time=480))
+            raita.append(mido.Message("note_on", note=nuotti, velocity=64, time=0))
+            raita.append(mido.Message("note_on", note=nuotti, velocity=0, time=480))
 
-    midi.tracks.append(track)
-
+    midi.tracks.append(raita)
     midi.save(tiedostopolku)

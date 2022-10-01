@@ -1,11 +1,14 @@
+"""Mahdollistaa musiikin generoinnin Markovin ketjujen avulla.
+from musiikki_generaattori import musiikki_generaattori
+"""
 from collections import deque
 from glob import glob
 from markov_ketju import MarkovKetju
-from midi_kasittelija import lue_midi, kirjoita_midi 
+from midi_kasittelija import lue_midi, kirjoita_midi
 from trie import Trie
 
-
 class MusiikkiGeneraattori:
+    """Yhden instanssin luokka musiikin generoimiseen."""
     def __init__(self):
         self._ketju = None
         self._nuotit = []
@@ -31,34 +34,42 @@ class MusiikkiGeneraattori:
                 "B":11}
 
     def lue_opetusdata(self, polku):
+        """Lukee nuotit annetun polun MIDI-tiedostoista.
+        Useamman tiedoston lukeminen *-merkillä esim 'kansio/*.mid'
+        """
         tiedostot = glob(polku)
         self._opetusdata = []
 
         for tiedosto in tiedostot:
             try:
-                for x in lue_midi(tiedosto):
-                    self._opetusdata.append(x)
-            except:
+                for jono in lue_midi(tiedosto):
+                    self._opetusdata.append(jono)
+            # Kaikki virheet halutaan ohittaa
+            except: # pylint: disable=bare-except
                 continue
 
     def valmistele_ketju(self, alkuosa, aste=1):
+        """Luo ja valmistelee halutun asteisen Markovin ketjun annetulla alkuosalla"""
         alkuosa = self._nuotit_midiksi(alkuosa)
 
         if len(alkuosa) < aste:
             trie = Trie()
 
+            # Rakentaa poikkeuksellisesti Trien, jossa on kaikki ENINTÄÄN 'aste' mittaiset alkiot,
+            # jotka löytyvät opetusdatasta.
             for jono in self._opetusdata:
                 if len(jono) > aste:
                     alkio = deque()
 
-                    for i in range(0, len(jono)):
+                    for nuotti in jono:
                         if len(alkio) > aste:
                             alkio.popleft()
-                        alkio.append(jono[i])
-                        for j in range(-len(alkio), 0):
-                            trie.lisaa([alkio[x] for x in range(j, 0)])
+                        alkio.append(nuotti)
+                        for i in range(-len(alkio), 0):
+                            trie.lisaa([alkio[x] for x in range(i, 0)])
 
-            alkuosa = [x for x in alkuosa]
+            # Täydentää alkuosan riittävän pitkäksi käyttämällä asteittain pidempiä Markovin ketjuja
+            alkuosa = list(alkuosa)
             while len(alkuosa) < aste:
                 self._ketju = MarkovKetju(len(alkuosa), trie)
                 self._ketju.aseta_alkuosa(alkuosa)
@@ -72,10 +83,11 @@ class MusiikkiGeneraattori:
             self._ketju.kasittele_opetusdata(self._opetusdata)
             self._ketju.aseta_alkuosa(alkuosa)
 
-    def generoi_nuotteja(self, n):
+    def generoi_nuotteja(self, maara):
+        """Generoi halutun määrän nuotteja aiemmin alustetulla Markovin ketjulla"""
         self._nuotit = list(self._ketju.menneet_tilat)
-        nuotteja = n - len(self._nuotit)
-        for i in range(nuotteja):
+        nuotteja = maara - len(self._nuotit)
+        for _ in range(nuotteja):
             # Tunnistaa jos edellinen Markovin ketjun iteraatio palautti None
             if not self._nuotit[-1]:
                 break
@@ -84,9 +96,11 @@ class MusiikkiGeneraattori:
         return len(self._nuotit)
 
     def kirjoita_midi(self, tiedostopolku, tempo=120):
+        """Kirjoittaa nuotit MIDI-tiedostoon halutulla tempolla"""
         kirjoita_midi(tiedostopolku, self._nuotit, tempo)
 
     def _nuotit_midiksi(self, nuotit: str):
+        """Muuttaa perinteiset nuottimerkinnät kuten C#4 MIDI-arvoiksi"""
         nuotit = nuotit.split("|")
         midi = []
         for nuotti in nuotit:
