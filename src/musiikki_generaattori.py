@@ -14,20 +14,20 @@ class MusiikkiGeneraattori:
         self._nuotti_midiksi = {
                 "C":0,
                 "C#":1,
-                "Db":1,
+                "DB":1,
                 "D":2,
                 "D#":3,
-                "Eb":3,
+                "EB":3,
                 "E":4,
                 "F":5,
                 "F#":6,
-                "Gb":6,
+                "GB":6,
                 "G":7,
                 "G#":8,
-                "Ab":8,
+                "AB":8,
                 "A":9,
                 "A#":10,
-                "Bb":10,
+                "BB":10,
                 "B":11}
 
     def lue_opetusdata(self, polku):
@@ -87,11 +87,11 @@ class MusiikkiGeneraattori:
         kirjoita_midi(tiedostopolku, self._nuotit, tempo)
 
     def _nuotit_midiksi(self, nuotit: str):
-        nuotit = nuotit.split(" ")
+        nuotit = nuotit.split("|")
         midi = []
         for nuotti in nuotit:
             arvo = (int(nuotti[-1])+1) * 12
-            arvo += self._nuotti_midiksi[nuotti[:-1]]
+            arvo += self._nuotti_midiksi[nuotti[:-1].upper()]
             midi.append(arvo)
         return midi
 
