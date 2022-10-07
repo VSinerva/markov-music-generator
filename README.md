@@ -1,6 +1,8 @@
 # Markov musiikkigeneraattori
 
 ## Dokumentaatio
+[Ohje](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/ohje.md)
+
 [Määrittelydokumentti](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/maarittelydokumentti.md)
 
 [Testausdokumentti](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/testausdokumentti.md)
