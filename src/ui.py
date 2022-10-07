@@ -111,7 +111,10 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
 
     def _aseta_aste(self, aste):
         try:
-            self._aste = int(aste[0])
+            aste = int(aste[0])
+            if aste < 1:
+                raise ValueError;
+            self._aste = aste
         except ValueError:
             self._virheet.append("ANNETTU ASTE EI MUUTETTAVISSA KOKONAISLUVUKSI!")
 
@@ -124,15 +127,21 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
 
     def _aseta_nuottien_maara(self, nuotteja):
         try:
-            self._nuottien_maara = int(nuotteja[0])
+            nuottien_maara = int(nuotteja[0])
+            if nuottien_maara < self._aste:
+                raise ValueError
+            self._nuottien_maara = nuottien_maara
         except ValueError:
-            self._virheet.append("ANNETTU NUOTTIEN MÄÄRÄ EI MUUTETTAVISSA KOKONAISLUVUKSI!")
+            self._virheet.append("ANNETTU NUOTTIEN MÄÄRÄ EI KELPAA!")
 
     def _aseta_tempo(self, tempo):
         try:
-            self._tempo = int(tempo[0])
+            tempo = int(tempo[0])
+            if tempo < 1:
+                raise ValueError
+            self._tempo = tempo
         except ValueError:
-            self._virheet.append("ANNETTU TEMPO EI MUUTETTAVISSA KOKONAISLUVUKSI!")
+            self._virheet.append("ANNETTU TEMPO EI KELPAA!")
 
     def _generoi_savelma(self, _):
         musiikki_generaattori.lue_opetusdata(self._opetusdata_polku)
