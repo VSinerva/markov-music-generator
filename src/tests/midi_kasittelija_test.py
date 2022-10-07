@@ -8,7 +8,18 @@ class TestMidiKasittelija(unittest.TestCase):
         if os.path.exists(testi_polku):
             os.remove(testi_polku)
 
-        nuotit = [60, 62, 64]
+        nuotit = [60, 62, 64, None]
         kirjoita_midi(testi_polku, nuotit)
+        luetut_nuotit = lue_midi(testi_polku)[0]
+        self.assertEqual(nuotit[:-1], luetut_nuotit)
+
+        nuotit = [None]
+        kirjoita_midi(testi_polku, nuotit)
+        luetut_nuotit = lue_midi(testi_polku)
+        self.assertEqual([], luetut_nuotit)
+
+    def test_molli_ja_transponointi(self):
+        testi_polku = "src/tests/testiMidi2.mid"
+        nuotit = [60, 62, 64, 60, 62, 64]
         luetut_nuotit = lue_midi(testi_polku)[0]
         self.assertEqual(nuotit, luetut_nuotit)

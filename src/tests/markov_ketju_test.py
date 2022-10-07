@@ -3,8 +3,12 @@ from markov_ketju import MarkovKetju
 
 class TestMarkovKetju(unittest.TestCase):
 
-    def test_0_aste(self):
+    def test_virheet(self):
         self.assertRaises(ValueError, MarkovKetju, 0)
+
+        ketju = MarkovKetju(2)
+        self.assertRaises(ValueError, ketju.seuraava)
+        self.assertRaises(ValueError, ketju.aseta_alkuosa, "F")
 
     def test_seuraava_1_aste(self):
         ketju = MarkovKetju(1)
@@ -35,7 +39,6 @@ class TestMarkovKetju(unittest.TestCase):
         self.assertEqual("E", ketju.seuraava())
         self.assertEqual("A", ketju.seuraava())
 
-        self.assertRaises(ValueError, ketju.aseta_alkuosa, "F")
         ketju.aseta_alkuosa("EF")
         self.assertFalse(ketju.seuraava())
 
