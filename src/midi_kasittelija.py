@@ -34,9 +34,9 @@ def lue_midi(tiedostopolku):
             if viesti.type == "key_signature":
                 if viesti.key[-1] == "m":
                     vaara_savellaji = True
-
-                vaara_savellaji = False
-                transponointi = savellaji_arvot[viesti.key]
+                else:
+                    vaara_savellaji = False
+                    transponointi = savellaji_arvot[viesti.key]
             elif not vaara_savellaji:
                 if viesti.type == "note_on" and viesti.velocity > 0:
                     raidan_nuotit.append(viesti.note+transponointi)
@@ -52,6 +52,7 @@ def kirjoita_midi(tiedostopolku, nuotit, tempo=120):
 
     raita.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
     raita.append(mido.MetaMessage("time_signature"))
+    raita.append(mido.Message("program_change", program=0, time=0))
 
     for nuotti in nuotit:
         if nuotti:
