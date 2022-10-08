@@ -45,19 +45,40 @@ def lue_midi(tiedostopolku):
 
     return tulos
 
-def kirjoita_midi(tiedostopolku, nuotit, tempo=120):
+def kirjoita_midi(tiedostopolku, nuotit, tempo=120, rytmi="1/4"):
     """Kirjoittaa halutut nuotit valittuun MIDI-tiedostoon annetulla tempolla"""
     midi = mido.MidiFile()
     raita = mido.MidiTrack()
+
+    rytmi = rytmi_taulukoksi(rytmi)
+    iskun_kesto = midi.ticks_per_beat
+    rytmi = [round(x*4*iskun_kesto) for x in rytmi]
 
     raita.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
     raita.append(mido.MetaMessage("time_signature"))
     raita.append(mido.Message("program_change", program=0, time=0))
 
+    rytmi_i = 0
+
     for nuotti in nuotit:
         if nuotti:
             raita.append(mido.Message("note_on", note=nuotti, velocity=64, time=0))
-            raita.append(mido.Message("note_on", note=nuotti, velocity=0, time=480))
+            raita.append(mido.Message("note_on", note=nuotti, velocity=0, time=rytmi[rytmi_i]))
+            rytmi_i = (rytmi_i + 1) % len(rytmi)
 
     midi.tracks.append(raita)
     midi.save(tiedostopolku)
+
+def rytmi_taulukoksi(rytmi):
+    rytmi = rytmi.split("|")
+    tulos = []
+    for alkio in rytmi:
+        alkio = alkio.split("/")
+        if len(alkio) == 2:
+            tulos.append(int(alkio[0]) / int(alkio[1]))
+        elif len(alkio) == 1:
+            tulos.append(int(alkio[0]))
+        else:
+            continue
+
+    return tulos

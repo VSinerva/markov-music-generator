@@ -12,8 +12,9 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
         self._tulos_polku = "savelma.mid"
         self._aste = 1
         self._alku = "C4"
-        self._nuottien_maara = 100
+        self._nuottien_maara = 120
         self._tempo = 120
+        self._rytmi = "1/4"
 
         self._toiminnot = {
                 "A": ("(A)pu", self._tulosta_apu, 0,
@@ -24,12 +25,14 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
                     "Valitse valmiin sävelmän polku"),
                 "K": ("(K)etjun aste", self._aseta_aste, 1,
                     "Aseta Markovin ketjun aste valittuun kokonaislukuun"),
-                "L": ("a(L)kuosa [merkkijono]", self._aseta_alkuosa, 1,
-                    "Aseta alkuosa. Esim. 'C4|D#5|Gb3'"),
                 "N": ("(N)uotteja [luku]", self._aseta_nuottien_maara, 1,
                     "Aseta sävelmän nuottien määrä valittuun kokonaislukuun"),
                 "T": ("(T)empo [luku]", self._aseta_tempo, 1,
                     "Aseta tempo valittuun kokonaislukuun"),
+                "R": ("(R)ytmi [merkkijono]", self._aseta_rytmi, 1,
+                    "Aseta rytmi. Esim. '1/4|1/4|1/2'"),
+                "L": ("a(L)kuosa [merkkijono]", self._aseta_alkuosa, 1,
+                    "Aseta alkuosa. Esim. 'C4|D#5|Gb3'"),
                 "G": ("(G)eneroi sävelmä", self._generoi_savelma, 0,
                     "Generoi sävelmä valituilla asetuksilla"),
                 "S": ("(S)ulje", self._sulje, 0,
@@ -93,6 +96,7 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
         print(f"Markovin ketjun aste: {self._aste}")
         print(f"Sävelmän pituus nuotteina: {self._nuottien_maara}")
         print(f"Tempo: {self._tempo}")
+        print(f"Rytmi: '{self._rytmi}'")
         print(f"Alkuosa: '{self._alku}'")
 
     def _tulosta_apu(self, _):
@@ -118,13 +122,6 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
         except ValueError:
             self._virheet.append("ANNETTU ASTE EI MUUTETTAVISSA KOKONAISLUVUKSI!")
 
-    def _aseta_alkuosa(self, alkuosa):
-        alkuosa = alkuosa[0]
-        if search(r"^([CcDdEeFfGgAaBb][#b]?[0-8]\|)*[CcDdEeFfGgAaBb][#b]?[0-8]$", alkuosa):
-            self._alku = alkuosa
-        else:
-            self._virheet.append("ANNETTU ALKUOSA EI KELPAA!")
-
     def _aseta_nuottien_maara(self, nuotteja):
         try:
             nuottien_maara = int(nuotteja[0])
@@ -143,13 +140,27 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
         except ValueError:
             self._virheet.append("ANNETTU TEMPO EI KELPAA!")
 
+    def _aseta_rytmi(self, rytmi):
+        rytmi = rytmi[0]
+        if search(r"^\|?((([1-9]\/[1-9])|[1-9])\|)*(([1-9]/[1-9])|[1-9])\|?$", rytmi):
+            self._rytmi = rytmi 
+        else:
+            self._virheet.append("ANNETTU RYTMI EI KELPAA!")
+
+    def _aseta_alkuosa(self, alkuosa):
+        alkuosa = alkuosa[0]
+        if search(r"^\|?([CcDdEeFfGgAaBb][#b]?[0-8]\|)*[CcDdEeFfGgAaBb][#b]?[0-8]\|?$", alkuosa):
+            self._alku = alkuosa
+        else:
+            self._virheet.append("ANNETTU ALKUOSA EI KELPAA!")
+
     def _generoi_savelma(self, _):
         musiikki_generaattori.lue_opetusdata(self._opetusdata_polku)
         musiikki_generaattori.valmistele_ketju(self._alku, self._aste)
 
         generoitu_maara = musiikki_generaattori.generoi_nuotteja(self._nuottien_maara)
         print(f"Generoitiin {generoitu_maara} nuottia!\n")
-        musiikki_generaattori.kirjoita_midi(self._tulos_polku, self._tempo)
+        musiikki_generaattori.kirjoita_midi(self._tulos_polku, self._tempo, self._rytmi)
 
     def _sulje(self):
         sys_exit(0)
