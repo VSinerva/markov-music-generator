@@ -8,8 +8,8 @@ class TestMidiKasittelija(unittest.TestCase):
         if os.path.exists(testi_polku):
             os.remove(testi_polku)
 
-        nuotit = [60, 62, 64, None]
-        kirjoita_midi(testi_polku, nuotit)
+        nuotit = [60, 62, 64, 66, 68, None]
+        kirjoita_midi(testi_polku, nuotit, tempo=120, rytmi="1/4|1")
         luetut_nuotit = lue_midi(testi_polku)[0]
         self.assertEqual(nuotit[:-1], luetut_nuotit)
 
