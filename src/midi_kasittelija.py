@@ -45,31 +45,58 @@ def lue_midi(tiedostopolku):
 
     return tulos
 
-def kirjoita_midi(tiedostopolku, nuotit, tempo=120, rytmi="1/4"):
-    """Kirjoittaa halutut nuotit valittuun MIDI-tiedostoon annetulla tempolla"""
+def kirjoita_midi(tiedostopolku, nuotit, muunnettava_midi=None, tempo=120, rytmi="1/4"):
+    """Kirjoittaa nuotit MIDI-tiedostoon halutulla tempolla ja rytmillä.
+    Vaihtoehtoisesti ottaa valitun MIDI-tiedoston ja vaihtaa sävelkorkeudet
+    """
     midi = mido.MidiFile()
     raita = mido.MidiTrack()
 
-    rytmi = rytmi_taulukoksi(rytmi)
-    iskun_kesto = midi.ticks_per_beat
-    rytmi = [round(x*4*iskun_kesto) for x in rytmi]
+    if muunnettava_midi:
+        muutettava = mido.MidiFile(muunnettava_midi)
+        muutettava_raita = muutettava.tracks[0]
 
-    raita.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
-    raita.append(mido.MetaMessage("time_signature"))
-    raita.append(mido.Message("program_change", program=0, time=0))
+        muunnokset = {}
 
-    rytmi_i = 0
+        nuotti_i = 0
 
-    for nuotti in nuotit:
-        if nuotti:
-            raita.append(mido.Message("note_on", note=nuotti, velocity=64, time=0))
-            raita.append(mido.Message("note_on", note=nuotti, velocity=0, time=rytmi[rytmi_i]))
-            rytmi_i = (rytmi_i + 1) % len(rytmi)
+        for viesti in muutettava_raita:
+            if viesti.type == "note_on" and viesti.velocity > 0:
+                muunnokset[viesti.note] = nuotit[nuotti_i]
+                raita.append(mido.Message("note_on",
+                    note=muunnokset[viesti.note], velocity=64, time=viesti.time))
+
+                nuotti_i += 1
+                if nuotti_i == len(nuotit):
+                    break
+            elif viesti.type == "note_off" or (viesti.type == "note_on" and viesti.velocity == 0):
+                raita.append(mido.Message("note_on",
+                    note=muunnokset[viesti.note], velocity=0, time=viesti.time))
+
+            else:
+                raita.append(viesti)
+    else:
+        iskun_kesto = midi.ticks_per_beat
+        rytmi = rytmi_taulukoksi(rytmi)
+        rytmi = [round(x*4*iskun_kesto) for x in rytmi]
+
+        raita.append(mido.MetaMessage("set_tempo", tempo=mido.bpm2tempo(tempo), time=0))
+        raita.append(mido.MetaMessage("time_signature"))
+        raita.append(mido.Message("program_change", program=0, time=0))
+
+        rytmi_i = 0
+
+        for nuotti in nuotit:
+            if nuotti:
+                raita.append(mido.Message("note_on", note=nuotti, velocity=64, time=0))
+                raita.append(mido.Message("note_on", note=nuotti, velocity=0, time=rytmi[rytmi_i]))
+                rytmi_i = (rytmi_i + 1) % len(rytmi)
 
     midi.tracks.append(raita)
     midi.save(tiedostopolku)
 
 def rytmi_taulukoksi(rytmi):
+    """Muuntaa annetun rytmin numeeriseksi taulukoksi"""
     rytmi = rytmi.split("|")
     tulos = []
     for alkio in rytmi:

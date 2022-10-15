@@ -23,7 +23,7 @@ Viikko 4: Generoin koodin nykyisellä versiolla 4:nnen asteen Markovin ketjulla 
 
 Viikko 5: Toteutin tällä viikolla manuaalisen rytmin määrittämisen. Generoin 80 lyhyen melodian yksinkertaisella kahden tahdin välein toistuvalla rytmillä. Yllätin siitä kuinka paljon yksinkertainenkin rytmi "elävöitti" generoitua melodiaa.
 
-Viikko 6: Testasin tällä viikolla kattavammin eri asteilla. Rajoitin asteen alle 5, sillä huomasin että tätä suuremmilla asteilla monessa tilanteessa oli vain yksi vaihtoehto seuraavalle nuotille, joka viittaa siihen että opetusdatan määrä ei ole riittävän suuri. Poistin myös tämän takia aiemmat testit.
+Viikko 6: Testasin tällä viikolla kattavammin eri asteilla. Rajoitin asteen alle 5, sillä huomasin että tätä suuremmilla asteilla monessa tilanteessa oli vain yksi vaihtoehto seuraavalle nuotille, joka viittaa siihen että opetusdatan määrä ei ole riittävän suuri. Poistin myös tämän takia aiemmat testit. Lisäksi toteutin mekanismin, jolla olemassaolevan MIDI tiedoston 1. raidan nuotin voidaan korvata Markovin ketjun antamilla nuoteilla. Nämä "muunnokset" löytyvät myös alta. Näissä oli käytössä 4. asteen ketju.
 
 [Aste 1](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_1.mp3)
 
@@ -34,5 +34,9 @@ Viikko 6: Testasin tällä viikolla kattavammin eri asteilla. Rajoitin asteen al
 [Aste 4](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_4.mp3)
 
 [Aste 4, ei rytmiä](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_4_rytmiton.mp3)
+
+[MIDI muunnos 1](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/muunnos1.mp3)
+
+[MIDI muunnos 2](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/muunnos2.mp3)
 
 [Sattuma](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/testi-sattuma.mp3)

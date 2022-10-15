@@ -45,7 +45,7 @@ class MusiikkiGeneraattori:
                 for jono in lue_midi(tiedosto):
                     self._opetusdata.append(jono)
             # Kaikki virheet halutaan ohittaa
-            except: # pylint: disable=bare-except
+            except Exception: # pylint: disable=broad-except
                 continue
 
     def valmistele_ketju(self, alkuosa, aste=1):
@@ -95,9 +95,14 @@ class MusiikkiGeneraattori:
 
         return len(self._nuotit)
 
-    def kirjoita_midi(self, tiedostopolku, tempo=120, rytmi="1/4"):
-        """Kirjoittaa nuotit MIDI-tiedostoon halutulla tempolla ja rytmillä"""
-        kirjoita_midi(tiedostopolku, self._nuotit, tempo, rytmi)
+    def kirjoita_midi(self, tiedostopolku, muunnettava_midi=None, tempo=120, rytmi="1/4"):
+        """Kirjoittaa nuotit MIDI-tiedostoon halutulla tempolla ja rytmillä.
+        Vaihtoehtoisesti ottaa valitun MIDI-tiedoston ja vaihtaa sävelkorkeudet
+        """
+        if muunnettava_midi:
+            kirjoita_midi(tiedostopolku, self._nuotit, muunnettava_midi)
+        else:
+            kirjoita_midi(tiedostopolku, self._nuotit, None, tempo, rytmi)
 
     def _nuotit_midiksi(self, nuotit: str):
         """Muuttaa perinteiset nuottimerkinnät kuten C#4 MIDI-arvoiksi"""
