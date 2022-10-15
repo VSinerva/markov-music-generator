@@ -62,16 +62,18 @@ def kirjoita_midi(tiedostopolku, nuotit, muunnettava_midi=None, tempo=120, rytmi
 
         for viesti in muutettava_raita:
             if viesti.type == "note_on" and viesti.velocity > 0:
+                if nuotti_i == len(nuotit):
+                    continue
+
                 muunnokset[viesti.note] = nuotit[nuotti_i]
                 raita.append(mido.Message("note_on",
                     note=muunnokset[viesti.note], velocity=64, time=viesti.time))
 
                 nuotti_i += 1
-                if nuotti_i == len(nuotit):
-                    break
             elif viesti.type == "note_off" or (viesti.type == "note_on" and viesti.velocity == 0):
-                raita.append(mido.Message("note_on",
-                    note=muunnokset[viesti.note], velocity=0, time=viesti.time))
+                if viesti.note in muunnokset:
+                    raita.append(mido.Message("note_on",
+                        note=muunnokset[viesti.note], velocity=0, time=viesti.time))
 
             else:
                 raita.append(viesti)
@@ -101,11 +103,13 @@ def rytmi_taulukoksi(rytmi):
     tulos = []
     for alkio in rytmi:
         alkio = alkio.split("/")
-        if len(alkio) == 2:
-            tulos.append(int(alkio[0]) / int(alkio[1]))
-        elif len(alkio) == 1:
-            tulos.append(int(alkio[0]))
-        else:
+
+        try:
+            if len(alkio) == 2:
+                tulos.append(int(alkio[0]) / int(alkio[1]))
+            elif len(alkio) == 1:
+                tulos.append(int(alkio[0]))
+        except ValueError:
             continue
 
     return tulos

@@ -9,7 +9,7 @@ class TestMidiKasittelija(unittest.TestCase):
             os.remove(testi_polku)
 
         nuotit = [60, 62, 64, 66, 68, None]
-        kirjoita_midi(testi_polku, nuotit, tempo=120, rytmi="1/4|1")
+        kirjoita_midi(testi_polku, nuotit, tempo=120, rytmi="1/4|1|a|1/2/3")
         luetut_nuotit = lue_midi(testi_polku)[0]
         self.assertEqual(nuotit[:-1], luetut_nuotit)
 
@@ -17,6 +17,18 @@ class TestMidiKasittelija(unittest.TestCase):
         kirjoita_midi(testi_polku, nuotit)
         luetut_nuotit = lue_midi(testi_polku)
         self.assertEqual([], luetut_nuotit)
+
+    def test_muunnos(self):
+        testi_polku = "src/tests/testiMidi.mid"
+        if os.path.exists(testi_polku):
+            os.remove(testi_polku)
+
+        testi_muunnos_polku = "src/tests/testiMidi3.mid"
+        nuotit = [60, 62]
+        kirjoita_midi(testi_polku, nuotit, testi_muunnos_polku)
+
+        luetut_nuotit = lue_midi(testi_polku)[0]
+        self.assertEqual(nuotit, luetut_nuotit)
 
     def test_molli_ja_transponointi(self):
         testi_polku = "src/tests/testiMidi2.mid"
