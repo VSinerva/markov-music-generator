@@ -13,7 +13,7 @@ Ohjelman vaatimat kirjastot voi asentaa komennolla
 
 Ohjelma on nyt valmis käytettäväksi
 
-`python3 src/main.py`
+`invoke start`
 
 # Opetusdata
 Opetusdataksi kelpaa mikä tahansa MIDI-tiedosto, mutta itse olen käyttänyt MuseScore-palvelua tietyillä [hakukriteereillä](https://musescore.com/sheetmusic?instrument=2&instrumentation=114&license=to_share&recording_type=public-domain). Ainoa rajoitus on se, että ohjelma jättää huomiotta molli-sävellajeissa (minor key signature) olevat osat. Laadun parantamiseksi jokaisessa MIDI-tiedoston raidassa ("track") olisi hyvä olla vain yksi melodia. Edellä olevasta linkistä löytyvät tiedostot ovat olleet sopivia, joten se on varma valinta, jos olet epävarma.
