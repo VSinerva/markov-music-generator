@@ -90,6 +90,7 @@ class MusiikkiGeneraattori:
         for _ in range(nuotteja):
             # Tunnistaa jos edellinen Markovin ketjun iteraatio palautti None
             if not self._nuotit[-1]:
+                self._nuotit = self._nuotit[:-1]
                 break
             self._nuotit.append(self._ketju.seuraava())
 
