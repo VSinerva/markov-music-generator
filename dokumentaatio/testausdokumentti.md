@@ -23,8 +23,16 @@ Viikko 4: Generoin koodin nykyisellä versiolla 4:nnen asteen Markovin ketjulla 
 
 Viikko 5: Toteutin tällä viikolla manuaalisen rytmin määrittämisen. Generoin 80 lyhyen melodian yksinkertaisella kahden tahdin välein toistuvalla rytmillä. Yllätin siitä kuinka paljon yksinkertainenkin rytmi "elävöitti" generoitua melodiaa.
 
-[Viikko 4](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/testi1-aste4.mp3)
+Viikko 6: Testasin tällä viikolla kattavammin eri asteilla. Rajoitin asteen alle 5, sillä huomasin että tätä suuremmilla asteilla monessa tilanteessa oli vain yksi vaihtoehto seuraavalle nuotille, joka viittaa siihen että opetusdatan määrä ei ole riittävän suuri. Poistin myös tämän takia aiemmat testit.
 
-[Viikko 5](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/testi-rytmi-aste11.mp3)
+[Aste 1](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_1.mp3)
+
+[Aste 2](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_2.mp3)
+
+[Aste 3](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_3.mp3)
+
+[Aste 4](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_4.mp3)
+
+[Aste 4, ei rytmiä](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/aste_4_rytmiton.mp3)
 
 [Sattuma](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/testi-sattuma.mp3)
