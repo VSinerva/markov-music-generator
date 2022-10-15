@@ -19,3 +19,5 @@
 [Viikko 4](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/viikko4.md)
 
 [Viikko 5](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/viikko5.md)
+
+[Viikko 6](https://github.com/ArcticCoder/markov-music-generator/blob/main/dokumentaatio/viikko6.md)
