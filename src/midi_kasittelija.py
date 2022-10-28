@@ -22,7 +22,9 @@ savellaji_arvot = {
         }
 
 def lue_midi(tiedostopolku):
-    """Lukee nuotit MIDI tiedostosta"""
+    """Lukee nuotit MIDI tiedostosta. Jokainen raita (track) käsitellään erikseen.
+    Palauttaa listan nuottien MIDI-arvoja transponoituna C-duuriin. Molli sävellajeja ei tueta.
+    """
     midi = mido.MidiFile(tiedostopolku)
     tulos = []
     for raita in midi.tracks:
@@ -78,6 +80,9 @@ def kirjoita_midi(tiedostopolku, nuotit, muunnettava_midi=None, tempo=120, rytmi
             else:
                 raita.append(viesti)
     else:
+        #MIDI-tiedosto sisältää 1/4 nuotin pituuden ja nuottien kestot ilmaistaan "tickeinä"
+        #joille ei ole musikaalista vastinetta. *4 muuntaa nuottien kestot
+        #1/4 nuottien määräksi ja *iskun_kesto muuntaa tämän "tickeiksi"
         iskun_kesto = midi.ticks_per_beat
         rytmi = rytmi_taulukoksi(rytmi)
         rytmi = [round(x*4*iskun_kesto) for x in rytmi]
@@ -98,7 +103,9 @@ def kirjoita_midi(tiedostopolku, nuotit, muunnettava_midi=None, tempo=120, rytmi
     midi.save(tiedostopolku)
 
 def rytmi_taulukoksi(rytmi):
-    """Muuntaa annetun rytmin numeeriseksi taulukoksi"""
+    """Muuntaa annetun rytmin numeeriseksi taulukoksi.
+    Rytmi annetaan nuottien kestoina muodossa "1/4|1/2|1|" jne.
+    """
     rytmi = rytmi.split("|")
     tulos = []
     for alkio in rytmi:
