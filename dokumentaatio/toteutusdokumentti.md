@@ -24,6 +24,7 @@ Toteutunut tilavaativuus vastaa ideaalista O(n), joka on myös helppo todeta koo
 - Tapa jolla toteutin komennot ei ole erityisen mielekäs omasta mielestäni, sillä sopivan kirjaimen löytäminen kävi jo nyt välillä hankalaksi. Ohjelman merkittävä laajentaminen olisi siis tältä osin turhan hankalaa.
 - Alkuosan ja rytmin määrittäminen on hieman kömpelöä merkkijonoissa olevien erikoismerkkien takia.
 - Olisin halunnut, että ohjelma kertoo esimerkiksi prosenttina, kuinka monen nuotin kohdalla oli enemmän kuin yksi vaihtoehto. Tämä auttaisi asteen valinnassa, sillä käyttäjä näkisi milloin aletaan käytännössä vain toistamaan opetusdataa sellaisenaan.
+- MIDI-muunnos jättää esimerkiksi vanhat sävellaji yms. merkinnät, jotka eivät enää pidä paikkansa. Ei haittaa ohjelman toimintaa, mutta mikäli MIDI-tiedostoista tehtäisiin suoraan partituuri, sävellaji merkittäisiin väärin. Itse nuottien arvot ovat kuitenkin oikein, jolloin ohjelmisto osaa kyllä soittaa oikeat nuotit tästä virheestä riippumatta
 
 ## Lähteet
 [Wikipedia: Trie](https://en.wikipedia.org/wiki/Trie)
