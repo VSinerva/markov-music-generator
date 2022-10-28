@@ -58,7 +58,7 @@ class Trie:
                 kasiteltavat_solmut.append(lapsi)
             if summa:
                 for _, lapsi in solmu.lapset.items():
-                    merkki.todennakoisyys = lapsi.laskuri / summa
+                    lapsi.todennakoisyys = lapsi.laskuri / summa
 
         self.todennakoisyydet_laskettu = True
 
