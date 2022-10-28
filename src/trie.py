@@ -30,7 +30,7 @@ class Trie:
 
         solmu = self.juuri
 
-        #Käy läpi polun alkiota vastaavaan solmuun. Luo tarvittaessa solmuja
+        #Kulkee polun alkiota vastaavaan solmuun. Luo tarvittaessa solmuja
         for merkki in alkio:
             if merkki not in solmu.lapset:
                 solmu.lapset[merkki] = TrieSolmu()
@@ -53,12 +53,12 @@ class Trie:
         while kasiteltavat_solmut:
             solmu = kasiteltavat_solmut.pop()
             summa = 0
-            for _, merkki in solmu.lapset.items():
-                summa += merkki.laskuri
-                kasiteltavat_solmut.append(merkki)
+            for _, lapsi in solmu.lapset.items():
+                summa += lapsi.laskuri
+                kasiteltavat_solmut.append(lapsi)
             if summa:
-                for _, merkki in solmu.lapset.items():
-                    merkki.todennakoisyys = merkki.laskuri / summa
+                for _, lapsi in solmu.lapset.items():
+                    merkki.todennakoisyys = lapsi.laskuri / summa
 
         self.todennakoisyydet_laskettu = True
 
