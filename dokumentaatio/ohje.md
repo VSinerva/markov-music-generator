@@ -13,21 +13,23 @@ Ohjelman vaatimat kirjastot voi asentaa komennolla
 
 `pip install -r requirements.txt`
 
+# Käyttäminen
+
 Ohjelma on nyt valmis käytettäväksi
 
 `invoke start`
 
 Ohjelma tulostaa ohjeet komennolla 'A'. Tässä vielä tarkentavaa tietoa komennoista, joiden kohdalla se on mielekästä:
-## (O)petusdata
+### (O)petusdata
 Opetusdatan tiedosto polku. Voi olla absoluuttinen tai suhteellinen. Hyväksyy esimerkiksi ns. wildcard merkin * ja käsittelee sitä yleisellä tavalla.  Taustalla on pythonin [glob](https://docs.python.org/3/library/glob.html), jonka dokumentaatiosta löytyy enemmän tietoa siitä, mitä merkkejä voi käyttää ja miten. Muutujan oletusarvo ottaa opetusdataksi kaikki "opetusdata"-kansion MIDI-tiedostot.
 
-## a(L)kuosa
+### a(L)kuosa
 Generoitavan sävelmän alkuosa. Esitetään perinteisillä nuottimerkinnöillä, kuten "C4" ja "D#5". Erottimena toimii `|`. Mikäli alkuosan pituus ylittää Markovin ketjun asteen, ylimääräiset nuotit EIVÄT PÄÄDY lopulliseen melodiaan, vaan ne jätetään huomiotta. Toisaalta mikäli alkuosan pituus on pienempi kuin Markovin ketjun aste, sitä täydennetään opetusdatan perusteella riittävän pitkäksi.
 
-## (R)ytmi
+### (R)ytmi
 Aseta rytmi nuottien kestoina. Esim neljäsosanuotti "1/4", puolinuotti "1/2" ja kokonainen nuotti "1". Erottimena toimii `|`. Rytmiä käytetään annetussa järjestyksessä ja toistetaan alusta alkaen tarpeen mukaan.
 
-## (M)uunnettava MIDI
+### (M)uunnettava MIDI
 Vaihtoehtoinen tapa määrittää rytmi, tempo ja muita musikaalisia piirteitä. Tässä tilassa ohjelma ottaa annetun MIDI-tiedoston ja luo siitä kopion kahdella muutoksella
 - Keston yläraja määräytyy generoitavien nuottien määrästä
 - Sävelkorkeudet vaihdetaan Markovin ketjulla generoituihin
