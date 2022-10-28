@@ -52,6 +52,7 @@ class MusiikkiGeneraattori:
         """Luo ja valmistelee halutun asteisen Markovin ketjun annetulla alkuosalla"""
         alkuosa = self._nuotit_midiksi(alkuosa)
 
+        #Liian lyhyt alkuosa täydennetään käyttäen portaittain korkeamman asteen Markovin ketjuja
         if len(alkuosa) < aste:
             trie = Trie()
 
@@ -84,7 +85,9 @@ class MusiikkiGeneraattori:
             self._ketju.aseta_alkuosa(alkuosa)
 
     def generoi_nuotteja(self, maara):
-        """Generoi halutun määrän nuotteja aiemmin alustetulla Markovin ketjulla"""
+        """Generoi halutun määrän nuotteja aiemmin alustetulla Markovin ketjulla.
+        Palauttaa onnistuneesti generoitujen nuottien määrän.
+        """
         self._nuotit = list(self._ketju.menneet_tilat)
         nuotteja = maara - len(self._nuotit)
         for _ in range(nuotteja):
