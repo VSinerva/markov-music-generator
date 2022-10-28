@@ -1,5 +1,6 @@
 """Musiikki generaattorin tekstipohjainen käyttöliittymä
-from ui import UI"""
+from ui import UI
+"""
 from os import system, name
 from os.path import exists
 from re import search
@@ -18,6 +19,7 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
         self._rytmi = "1/4"
         self._muunnettava_midi_polku = ""
 
+        #dict, jossa merkkiä vastaa komennon nimi, funktio, parametrien määrä ja kuvaus
         self._toiminnot = {
                 "A": ("(A)pu", self._tulosta_apu, 0,
                     "Tulosta apu"),
@@ -44,7 +46,6 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
                 }
 
         self._virheet = []
-
 
         self._tyhjenna()
         self._suorita()
@@ -128,7 +129,7 @@ class UI: # pylint: disable=too-few-public-methods, too-many-instance-attributes
                 raise ValueError
             self._aste = aste
         except ValueError:
-            self._virheet.append("ANNETTU ASTE EI MUUTETTAVISSA KOKONAISLUVUKSI!")
+            self._virheet.append("ANNETTU ASTE EI KELPAA!")
 
     def _aseta_nuottien_maara(self, nuotteja):
         try:
